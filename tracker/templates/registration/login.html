@@ -1,0 +1,36 @@
+
+{% extends "tracker/base.html" %}
+{% block title%}Login{% endblock %}
+{% block content %}
+<div class="flex min-h-[70vh] items-center justify-center">
+  <div class="w-full max-w-md rounded-[2rem] border border-slate-200 bg-white/95 p-8 shadow-[0_30px_60px_-35px_rgba(15,23,42,0.4)]">
+    <div class="mb-8 text-center">
+      <h1 class="text-3xl font-semibold text-slate-900">Welcome Back</h1>
+      <p class="mt-2 text-sm text-slate-500">Sign in to your account to continue.</p>
+    </div>
+
+    <form action="" method="POST" class="space-y-5">
+      {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
+            Invalid username or password. Please try again.
+        </div>
+    {% endif %}
+      <label class="block">
+        <span class="mb-2 block text-sm font-medium text-slate-700">Username</span>
+        <input type="text" name="username" placeholder="Enter your username" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+      </label>
+
+      <label class="block">
+        <span class="mb-2 block text-sm font-medium text-slate-700">Password</span>
+        <input type="password" name="password" placeholder="Enter your password" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+      </label>
+
+      <button type="submit" class="w-full rounded-2xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white">Login</button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-slate-500">Don't have an account? <a href="{% url 'register' %}" class="font-semibold text-sky-600 hover:text-sky-700">Register now</a></p>
+  </div>
+</div>
+ 
+{% endblock content %}

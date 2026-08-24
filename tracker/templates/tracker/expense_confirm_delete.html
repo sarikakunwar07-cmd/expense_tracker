@@ -1,0 +1,38 @@
+{% extends "tracker/base.html" %}
+
+{% block title %}
+Delete Expense
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-md mx-auto mt-10">
+
+    <h1 class="text-2xl font-bold mb-4">
+        Delete Expense
+    </h1>
+
+    <p class="mb-5">
+        Are you sure you want to delete "{{ object.title }}"?
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="bg-red-600 text-white px-5 py-2 rounded">
+            Yes, Delete
+        </button>
+
+        <a
+            href="{% url 'expense-list' %}"
+            class="ml-3">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock content %}

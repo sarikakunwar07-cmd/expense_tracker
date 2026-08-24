@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <title>{% block title %}{% endblock %}</title>
+
+</head>
+
+
+<body class="bg-gray-100">
+
+
+    <!-- Navbar -->
+
+    <nav class="bg-indigo-500 p-4 text-white">
+
+        <div class="flex justify-between items-center">
+
+
+            <!-- Left side -->
+
+            <div>
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="font-bold text-lg"
+                >
+                    Expense Tracker
+                </a>
+
+                {% if user.is_authenticated %}
+
+                    <a
+                        href="{% url 'dashboard' %}"
+                        class="ml-6 hover:underline"
+                    >
+                        Dashboard
+                    </a>
+
+                    <a
+                        href="{% url 'expense-list' %}"
+                        class="ml-4 hover:underline"
+                    >
+                        Expenses
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Right side -->
+
+            <div class="flex items-center gap-4">
+
+                {% if user.is_authenticated %}
+
+                    <!-- Username -->
+
+                    <span class="font-medium">
+                        Hi, {{ user.username }}
+                    </span>
+
+
+                    <!-- Logout -->
+
+                    <form
+                        action="{% url 'logout' %}"
+                        method="POST"
+                        class="inline"
+                    >
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600"
+                        >
+                            Logout
+                        </button>
+
+                    </form>
+
+                {% else %}
+
+                    <!-- Login -->
+
+                    <a
+                        href="{% url 'login' %}"
+                        class="hover:underline"
+                    >
+                        Login
+                    </a>
+
+
+                    <!-- Register -->
+
+                    <a
+                        href="{% url 'register' %}"
+                        class="hover:underline"
+                    >
+                        Register
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Messages -->
+
+    {% if messages %}
+
+        <div class="max-w-md mx-auto mt-4">
+
+            {% for message in messages %}
+
+                <div
+                    class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg"
+                >
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- Page Content -->
+
+    {% block content %}
+    {% endblock content %}
+
+
+</body>
+
+</html>

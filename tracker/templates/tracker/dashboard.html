@@ -1,0 +1,201 @@
+{% extends "tracker/base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container mx-auto px-4 py-6">
+
+    <!-- Dashboard Header -->
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">
+                 Welcome, {{ user.username }}
+            </h1>
+                
+            <p class="text-gray-500 mt-1">
+                Track and manage your expenses
+            </p>
+        </div>
+        <a href="{% url 'expense-create' %}"class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">
+             + Add Expense</a>
+
+        </div>
+
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+        <!-- Total Expenses -->
+        <div class="bg-white shadow-md rounded-xl p-6 border-l-4 border-blue-500">
+
+            <p class="text-gray-500">
+                Total Expenses
+            </p>
+
+            <h2 class="text-3xl font-bold text-gray-800 mt-2">
+                Rs. {{ total_expenses }}
+            </h2>
+            
+            
+
+            <p class="text-sm text-gray-400 mt-2">
+                All time
+            </p>
+
+        </div>
+
+
+        <!-- This Month -->
+        <div class="bg-white shadow-md rounded-xl p-6 border-l-4 border-green-500">
+
+            <p class="text-gray-500">
+                This Month
+            </p>
+
+            <h2 class="text-3xl font-bold text-gray-800 mt-2">Rs.
+                 {{ this_month_expenses }}
+
+            </h2>
+
+            <p class="text-sm text-gray-400 mt-2">
+                Current month
+            </p>
+
+        </div>
+
+
+        <!-- Transactions -->
+        <div class="bg-white shadow-md rounded-xl p-6 border-l-4 border-black-500">
+
+            <p class="text-gray-500">
+                Transactions
+            </p>
+
+            <h2 class="text-3xl font-bold text-gray-800 mt-2">
+                 {{ transaction_count }}
+
+            </h2>
+
+            <p class="text-sm text-gray-400 mt-2">
+                Total transactions
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Dashboard Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+
+        <!-- Recent Expenses -->
+        <div class="bg-white shadow-md rounded-xl p-6">
+
+            <div class="flex justify-between items-center mb-5">
+
+                <h2 class="text-xl font-bold text-gray-800">
+                    Recent Expenses
+                </h2>
+
+                <a href="{% url 'expense-list' %}"
+                   class="text-blue-600 text-sm hover:underline">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="space-y-4">
+
+                <div class="flex justify-between items-center border-b pb-3">
+
+                    <div>
+                        <div class="space-y-4">
+
+    {% for expense in recent_expenses %}
+
+    <div class="flex justify-between items-center border-b pb-3">
+
+        <div>
+            <p class="font-semibold text-gray-700">
+                {{ expense.title }}
+            </p>
+
+            <p class="text-sm text-gray-400">
+                {{ expense.category }} • {{ expense.date }}
+            </p>
+        </div>
+
+        <p class="font-bold text-red-500">
+             Rs. {{ expense.amount }}
+         </p>
+
+        </div>
+         {% empty %}
+          <p class="text-gray-400">
+             No expenses yet.
+             </p>
+              {% endfor %}
+    
+        </div>
+
+         </div>
+
+        </div>
+        <!-- Expenses by Category -->
+
+<div class="bg-white shadow-md rounded-xl p-6">
+
+    <h2 class="text-xl font-bold text-gray-800 mb-6">
+        Expenses by Category
+    </h2>
+
+    <div class="space-y-4">
+
+        {% for category in category_expenses %}
+
+        <div class="border-b pb-4">
+
+            <div class="flex justify-between items-center">
+
+                <div>
+                    <p class="font-semibold text-gray-700">
+                        {{ category.category__name }}
+                    </p>
+
+                    <p class="text-sm text-gray-400">
+                        Category spending
+                    </p>
+                </div>
+
+                <p class="font-bold text-gray-800">
+                    Rs. {{ category.total }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p class="text-gray-400">
+            No category data available yet.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+         
+
+           
+
+    </div>
+
+</div>
+
+{% endblock content %}
